@@ -44,10 +44,10 @@ faults_idx = {
 
 def get_meta():
     try:
-        #this works in normal script execution where __file__ is defined
+        # This works in normal script execution where __file__ is defined
         base_dir = os.path.dirname(os.path.abspath(__file__))
     except NameError:
-        # compatibility with colab where __file__ is not defined
+        # In environments like Colab, __file__ is not defined
         base_dir = os.getcwd()
 
     return os.path.join(base_dir, 'metadata.txt')
@@ -89,6 +89,7 @@ class CWRU:
         # shuffle training and test arrays
         self._shuffle()
         self.all_labels = tuple(((line[0]+line[2]),get_class(line[0],line[2])) for line in lines)
+
         self.classes = sorted(list(set(self.all_labels)), key=lambda label: label[1]) 
         self.nclasses = len(self.classes)  # number of classes
  
@@ -166,9 +167,12 @@ class CWRU:
             print(f"sample {i+1}:")
             print(f"X_train: {self.X_train[i]}:")
             print(f"y_train: {self.y_train[i]}:")
+            print(f"label: {self.all_labels[self.y_train[i]][0]}")
         print("\nTesting Data Sample:")
         for i in range(n_samples):
             print(f"X_test: {self.X_test[i]}:")
             print(f"y_test: {self.y_test[i]}:")
+            print(f"label: {self.all_labels[self.y_test[i]][0]}")
+
     # cwru_instance = CWRU(['12DriveEndFault'], ['1797'], 1200)  # Example initialization, adjust parameters as needed
     # cwru_instance.print_dataset_sample(n_samples=5)
