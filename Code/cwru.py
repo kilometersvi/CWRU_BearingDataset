@@ -42,6 +42,17 @@ faults_idx = {
 #     '0.021-OuterRace12': 15,
 }
 
+def get_meta():
+    try:
+        #this works in normal script execution where __file__ is defined
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+    except NameError:
+        # compatibility with colab where __file__ is not defined
+        base_dir = os.getcwd()
+
+    return os.path.join(base_dir, 'metadata.txt')
+
+
 def get_class(exp,fault):
     if fault == 'Normal':
         return 0
@@ -61,8 +72,7 @@ class CWRU:
         # root directory of all data
         rdir = os.path.join('Datasets/CWRU')
         print(rdir,exp,rpm)
- 
-        fmeta = os.path.join(os.path.dirname('__file__'), 'metadata.txt')
+        fmeta = get_meta()
         all_lines = open(fmeta).readlines()
         all_lines = open(fmeta).readlines()
         lines = []
